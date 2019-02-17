@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".activity.HomeActivity">
+
+    <androidx.drawerlayout.widget.DrawerLayout
+            android:id="@+id/drawerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            tools:openDrawer="start">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/colorPrimary">
+
+            <androidx.appcompat.widget.Toolbar
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/toolbar"
+                    android:layout_width="0dp"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="?attr/colorPrimary"
+                    app:contentInsetStartWithNavigation="0dp"
+                    android:fitsSystemWindows="true"
+                    android:theme="@style/ThemeOverlay.AppCompat.Light"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toStartOf="@+id/lytImageCurrentUser"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="?attr/actionBarSize"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:id="@+id/lytImageCurrentUser">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imageCurrentUser"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/placeholder"
+                        app:civ_border_overlay="true"
+                        app:civ_border_width="0dp"
+                        app:civ_border_color="@color/color_accent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <FrameLayout
+                    android:id="@+id/fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/toolbar">
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp"
+                        android:elevation="3dp"
+                        android:id="@+id/viewShadow"
+                        android:layout_gravity="top"
+                        android:background="@drawable/bg_shadow_soft"/>
+            </FrameLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.navigation.NavigationView
+                android:id="@+id/navView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="start|left"
+                android:scrollbars="vertical"
+                android:background="?attr/colorPrimary"
+                android:scrollbarThumbVertical="@color/color_accent"
+                android:fitsSystemWindows="false"
+                app:headerLayout="@layout/include_drawer_header_home"
+                app:menu="@menu/menu_home"
+                app:itemIconTint="@color/navigation_item_home_icon"
+                app:itemTextColor="@color/navigation_item_home_text"
+                />
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+</layout>

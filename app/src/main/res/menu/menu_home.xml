@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group
+            android:id="@+id/grp_1"
+            android:checkableBehavior="single">
+        <item
+                android:id="@+id/nav_ride_now"
+                android:checked="true"
+                android:icon="@drawable/ic_directions_bike"
+                android:title="Ride Now"/>
+        <item
+                android:id="@+id/nav_my_rides"
+                android:icon="@drawable/ic_history"
+                android:title="My Rides"/>
+    </group>
+
+    <group
+            android:id="@+id/grp_2"
+            android:checkableBehavior="single">
+        <item
+                android:id="@+id/nav_contact_us"
+                android:icon="@drawable/ic_phone_in_talk"
+                android:title="Contact Us"/>
+        <item
+                android:id="@+id/nav_rate_us"
+                android:icon="@drawable/ic_rate_review"
+                android:title="Rate Us"/>
+        <item
+                android:id="@+id/nav_about_us"
+                android:icon="@drawable/ic_about"
+                android:title="About Us"/>
+    </group>
+
+    <group
+            android:id="@+id/grp_3"
+            android:checkableBehavior="single">
+        <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_settings"
+                android:title="Settings"/>
+        <item
+                android:id="@+id/nav_help_feedback"
+                android:icon="@drawable/ic_feedback_black"
+                android:title="Help &amp; Feedback"/>
+    </group>
+
+    <group
+            android:id="@+id/grp_4"
+            android:checkableBehavior="none">
+        <item
+                android:id="@+id/nav_sign_out"
+                android:icon="@drawable/ic_power_settings"
+                android:title="Sign out"/>
+
+    </group>
+
+</menu>

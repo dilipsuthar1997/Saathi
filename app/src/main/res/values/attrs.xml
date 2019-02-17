@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ds">
+        <attr name="colorPrimary" format="color"/>
+        <attr name="backgroundColor" format="color"/>
+        <attr name="cardBackground" format="color"/>
+        <attr name="textPrimaryColor" format="color"/>
+        <attr name="textSecondaryColor" format="color"/>
+        <attr name="navTextColor" format="color"/>
+        <attr name="navTextColorSelect" format="color"/>
+        <attr name="navIconColor" format="color"/>
+        <attr name="navIconColorSelect" format="color"/>
+        <attr name="tintColor" format="color"/>
+        <attr name="buttonColor" format="color"/>
+        <attr name="tintCheckBox" format="color"/>
+    </declare-styleable>
+</resources>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_focused="true">
+        <layer-list>
+            <item android:bottom="2dp" android:left="2dp" android:right="2dp" android:top="2dp">
+                <shape android:shape="rectangle">
+                    <corners android:radius="5dp"/>
+                    <solid android:color="@color/grey_60" />
+                    <padding android:left="10dp" android:top="15dp" android:right="10dp" android:bottom="15dp"/>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+    <item android:state_pressed="true">
+        <layer-list>
+            <item android:bottom="2dp" android:left="2dp" android:right="2dp" android:top="2dp">
+                <shape android:shape="rectangle">
+                    <corners android:radius="5dp"/>
+                    <solid android:color="#48ba5b" />
+                    <padding android:left="10dp" android:top="15dp" android:right="10dp" android:bottom="15dp"/>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+    <item>
+        <layer-list>
+            <item android:bottom="2dp" android:left="2dp" android:right="2dp" android:top="2dp">
+                <shape android:shape="rectangle">
+                    <corners android:radius="5dp"/>
+                    <gradient android:startColor="#52cb8b" android:endColor="#48ba5b"/>
+                    <padding android:left="10dp" android:top="15dp" android:right="10dp" android:bottom="15dp"/>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+</selector>

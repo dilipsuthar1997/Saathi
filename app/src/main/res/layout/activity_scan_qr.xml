@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".activity.ScanQrActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:background="?attr/colorPrimary"
+            android:layout_height="match_parent">
+
+        <com.dlazaro66.qrcodereaderview.QRCodeReaderView
+                android:id="@+id/qrCodeView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginBottom="250dp" android:layout_marginStart="80dp"
+                android:layout_marginEnd="80dp" app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintVertical_bias="0.0" android:layout_marginTop="150dp"/>
+
+        <TextView
+                android:text="Adjust screen on QR code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView15"
+                android:textColor="?attr/textSecondaryColor"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/qrCodeView"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp"
+                android:textAppearance="@style/FiamUI.Text.BannerTitle"/>
+
+        <TextView
+                android:text="Scan code to Ride"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView16"
+                android:textColor="?attr/textPrimaryColor"
+                android:layout_marginBottom="32dp"
+                app:layout_constraintBottom_toTopOf="@+id/qrCodeView"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp"
+                android:textAppearance="@style/FiamUI.Text.Title"/>
+
+        <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/switchFlashLight"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/textView15"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp"
+                android:text="Flash Light"
+                tools:checked="false"
+                android:switchPadding="16dp"/>
+
+        <Switch
+                android:text="Auto focus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/switchAutoFocus"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/switchFlashLight"
+                android:switchPadding="16dp"
+                app:layout_constraintEnd_toEndOf="@+id/switchFlashLight"
+                app:layout_constraintStart_toStartOf="@+id/switchFlashLight"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

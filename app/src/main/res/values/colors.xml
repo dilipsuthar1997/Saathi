@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Light theme color-->
+    <color name="color_primary">#FFFFFF</color>
+    <color name="color_accent_light">#FF8292</color>
+    <color name="color_accent_dark">#E70823</color>
+    <color name="color_accent">#EB3349</color>
+    <color name="color_accent_2">#F45C43</color>
+    <color name="color_text_primary">#000000</color>
+    <color name="color_text_secondary">@color/grey_60</color>
+    <color name="color_background">@color/grey_10</color>
+    <color name="color_card_background">#FFFFFF</color>
+    <color name="color_tint">#EB3349</color>
+    <color name="color_tint_checkbox">@color/grey_60</color>
+
+    <!--Dark theme color-->
+    <color name="color_primary_night">#302F2F</color>
+    <color name="color_accent_light_night">#FF8292</color>
+    <color name="color_accent_dark_night">@color/grey_90</color>
+    <color name="color_accent_night">#EB3349</color>
+    <color name="color_accent_2_night">#F45C43</color>
+    <color name="color_text_primary_night">#FFFFFF</color>
+    <color name="color_text_secondary_night">@color/grey_40</color>
+    <color name="color_background_night">#303030</color>
+    <color name="color_card_background_night">#3D3D3D</color>
+    <color name="color_tint_night">#EB3349</color>
+    <color name="color_tint_checkbox_night">@color/grey_10</color>
+
+    <!-- COLOR For Rebuild -->
+    <color name="overlay_dark_10">#1A000000</color>
+    <color name="overlay_dark_20">#33000000</color>
+    <color name="overlay_dark_30">#4D000000</color>
+    <color name="overlay_dark_40">#66000000</color>
+    <color name="overlay_dark_50">#80000000</color>
+    <color name="overlay_dark_60">#99000000</color>
+    <color name="overlay_dark_70">#B3000000</color>
+    <color name="overlay_dark_80">#CC000000</color>
+    <color name="overlay_dark_90">#E6000000</color>
+
+    <color name="overlay_light_10">#1AFFFFFF</color>
+    <color name="overlay_light_20">#33FFFFFF</color>
+    <color name="overlay_light_30">#4DFFFFFF</color>
+    <color name="overlay_light_40">#66FFFFFF</color>
+    <color name="overlay_light_50">#8FFFFFF0</color>
+    <color name="overlay_light_60">#99FFFFFF</color>
+    <color name="overlay_light_70">#B3FFFFFF</color>
+    <color name="overlay_light_80">#CCFFFFFF</color>
+    <color name="overlay_light_90">#E6FFFFFF</color>
+
+    <color name="grey_3">#f7f7f7</color>
+    <color name="grey_5">#f2f2f2</color>
+    <color name="grey_10">#e6e6e6</color>
+    <color name="grey_20">#cccccc</color>
+    <color name="grey_40">#999999</color>
+    <color name="grey_60">#666666</color>
+    <color name="grey_80">#37474F</color>
+    <color name="grey_90">#263238</color>
+
+    <color name="blue_grey_50">#ECEFF1</color>
+    <color name="blue_grey_100">#CFD8DC</color>
+    <color name="blue_grey_200">#B0BEC5</color>
+    <color name="blue_grey_300">#90A4AE</color>
+    <color name="blue_grey_400">#78909C</color>
+    <color name="blue_grey_500">#607D8B</color>
+    <color name="blue_grey_600">#546E7A</color>
+    <color name="blue_grey_700">#455A64</color>
+    <color name="blue_grey_800">#37474F</color>
+    <color name="blue_grey_900">#263238</color>
+
+    <color name="red_500">#F44336</color>
+</resources>

@@ -1,0 +1,53 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <!-- Light/Day mode theme-->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_accent_dark</item>
+        <item name="colorAccent">@color/color_accent</item>
+        <item name="backgroundColor">@color/color_background</item>
+        <item name="cardBackground">@color/color_card_background</item>
+        <item name="textPrimaryColor">@color/color_text_primary</item>
+        <item name="textSecondaryColor">@color/color_text_secondary</item>
+        <item name="navIconColor">@color/grey_60</item>
+        <item name="navIconColorSelect">@color/color_accent</item>
+        <item name="navTextColor">@color/grey_60</item>
+        <item name="navTextColorSelect">@color/color_accent</item>
+        <item name="tintColor">@color/color_accent</item>
+        <item name="tintCheckBox">@color/color_tint_checkbox</item>
+        <!--<item name="android:windowAnimationStyle">@style/WindowsAnimationTransition</item>-->
+        <item name="android:fontFamily">@font/krub_medium</item>
+    </style>
+
+    <!-- Night/Dark mode theme -->
+    <style name="DarkTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/color_primary_night</item>
+        <item name="colorPrimaryDark">@color/color_accent_dark_night</item>
+        <item name="colorAccent">@color/color_accent_night</item>
+        <item name="backgroundColor">@color/color_background_night</item>
+        <item name="cardBackground">@color/color_card_background_night</item>
+        <item name="textPrimaryColor">@color/color_text_primary_night</item>
+        <item name="textSecondaryColor">@color/color_text_secondary_night</item>
+        <item name="navIconColor">@color/grey_60</item>
+        <item name="navIconColorSelect">@color/color_accent</item>
+        <item name="navTextColor">@color/grey_40</item>
+        <item name="navTextColorSelect">@color/color_accent</item>
+        <item name="tintColor">@color/color_accent</item>
+        <item name="tintCheckBox">@color/color_tint_checkbox_night</item>
+        <!--<item name="android:windowAnimationStyle">@style/WindowsAnimationTransition</item>-->
+        <item name="android:fontFamily">@font/krub_medium</item>
+    </style>
+    
+    <style name="WindowsAnimationTransition">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+    
+    <style name="FontRaleway">
+        <item name="android:fontFamily">@font/raleway</item>
+    </style>
+
+</resources>
