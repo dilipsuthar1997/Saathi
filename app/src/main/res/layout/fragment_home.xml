@@ -23,79 +23,114 @@
                 android:layout_marginEnd="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:cardCornerRadius="5dp"
                 app:cardElevation="6dp"
                 app:cardBackgroundColor="?attr/cardBackground"
-                android:id="@+id/cardView">
+                android:id="@+id/cardView"
+                android:layout_marginTop="16dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                <TextView
-                        android:text="--"
-                        android:layout_width="0dp"
-                        android:id="@+id/txtLocationAddress"
-                        android:textColor="?attr/textSecondaryColor"
-                        app:layout_constraintEnd_toStartOf="@+id/btnLocateMe"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textAlignment="textStart"
-                        android:gravity="center"
-                        tools:text="151, Ring Rd, Rampark Socirty, Bapod, Waghodia, Vadodara"
-                        android:padding="0dp"
-                        android:textSize="14sp"
-                        android:paddingTop="0dp"
-                        android:paddingBottom="0dp"
-                        android:paddingStart="0dp"
-                        android:paddingEnd="10dp"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:text="--"
+                            android:layout_width="0dp"
+                            android:id="@+id/txtLocationAddress"
+                            android:textColor="?attr/textSecondaryColor"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:textAlignment="textStart"
+                            android:gravity="center"
+                            tools:text="151, Ring Rd, Rampark Socirty, Bapod, Waghodia, Vadodara"
+                            android:padding="0dp"
+                            android:textSize="14sp"
+                            android:paddingTop="0dp"
+                            android:paddingBottom="0dp"
+                            android:paddingStart="0dp"
+                            android:paddingEnd="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_marginBottom="8dp"
+                            app:layout_constraintStart_toEndOf="@+id/imageView2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginEnd="16dp"/>
+
+                    <ImageButton
+                            android:src="@drawable/ic_directions_bike"
+                            android:layout_width="50dp"
+                            android:layout_height="0dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:id="@+id/imageView2"
+                            android:tint="@color/color_accent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginBottom="8dp"
-                        app:layout_constraintStart_toEndOf="@+id/imageView2"
-                        />
+                        android:layout_width="match_parent"
+                        android:id="@+id/lytOnRideDetails"
+                        android:visibility="gone">
 
-                <ImageButton
-                        android:src="@drawable/ic_my_location"
-                        android:layout_width="50dp"
-                        android:layout_height="0dp"
-                        android:id="@+id/btnLocateMe"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:clickable="true"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:tint="?attr/tintColor"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Bike"
+                            tools:text="Bike: 10054067"
+                            android:textColor="@color/color_accent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginStart="16dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_marginBottom="8dp"
+                            android:id="@+id/txtCurrentBikeOnCard"/>
 
-                <ProgressBar
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/progressBar2"
-                        app:layout_constraintTop_toBottomOf="@+id/txtLocationAddress"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:indeterminate="true"
-                        tools:visibility="gone"
-                        android:visibility="gone"/>
+                    <Chronometer
+                            android:textColor="?attr/textPrimaryColor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/txtTimer"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginEnd="16dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            />
 
-                <ImageButton
-                        android:src="@drawable/ic_directions_bike"
-                        android:layout_width="50dp"
-                        android:layout_height="0dp"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:id="@+id/imageView2"
-                        android:tint="@color/color_accent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        />
+                    <ImageView
+                            android:src="@drawable/shape_circle"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:id="@+id/imageView7"
+                            app:layout_constraintEnd_toStartOf="@+id/txtTimer"
+                            android:layout_marginEnd="8dp"
+                            app:layout_constraintTop_toTopOf="@+id/txtTimer"
+                            app:layout_constraintBottom_toBottomOf="@+id/txtTimer"/>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                            android:text="0 m"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/txtDistance"
+                            android:textColor="@color/color_accent"
+                            app:layout_constraintTop_toBottomOf="@+id/txtTimer"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginEnd="16dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginTop="4dp"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -118,7 +153,7 @@
             <TextView
                     android:text="Unlock Bike"
                     android:textColor="@android:color/white"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:textSize="16sp"
                     android:layout_height="30dp"
                     android:id="@+id/textScanCode"
@@ -128,6 +163,19 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"/>
         </androidx.cardview.widget.CardView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:src="@drawable/ic_my_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:id="@+id/fabLocateMe"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="16dp"
+                app:fabSize="mini"
+                app:rippleColor="@color/color_primary"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/cardView"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

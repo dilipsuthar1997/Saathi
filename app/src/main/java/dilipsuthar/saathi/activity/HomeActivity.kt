@@ -1,8 +1,10 @@
 package dilipsuthar.saathi.activity
 
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.graphics.Color
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -21,6 +23,8 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -28,6 +32,7 @@ import com.google.firebase.storage.StorageReference
 import dilipsuthar.saathi.R
 import dilipsuthar.saathi.databinding.ActivityHomeBinding
 import dilipsuthar.saathi.fragment.*
+import dilipsuthar.saathi.utils.ConnectivityReceiver
 import dilipsuthar.saathi.utils.Constant
 import dilipsuthar.saathi.utils.Tools
 import dilipsuthar.saathi.utils.mToast
@@ -73,6 +78,7 @@ class HomeActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
+        registerReceiver(ConnectivityReceiver(), IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
         auth = FirebaseAuth.getInstance()
         currentUser = auth.currentUser

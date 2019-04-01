@@ -4,17 +4,17 @@ package dilipsuthar.saathi.fragment
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
-import android.net.ConnectivityManager
 import android.os.AsyncTask
 import android.os.Bundle
+import android.os.SystemClock
 import android.preference.PreferenceManager
 import android.provider.Settings
 import android.util.Log
@@ -41,10 +41,11 @@ import com.squareup.okhttp.OkHttpClient
 import com.squareup.okhttp.Request
 
 import dilipsuthar.saathi.R
+import dilipsuthar.saathi.activity.HomeActivity
+import dilipsuthar.saathi.activity.PaymentActivity
 import dilipsuthar.saathi.activity.ScanQrActivity
 import dilipsuthar.saathi.databinding.FragmentHomeBinding
 import dilipsuthar.saathi.directionhelpers.GoogleMapModel
-import dilipsuthar.saathi.utils.ConnectivityReceiver
 import dilipsuthar.saathi.utils.Constant
 import dilipsuthar.saathi.utils.Tools
 import dilipsuthar.saathi.utils.mToast
@@ -58,8 +59,7 @@ import java.util.*
 class HomeFragment : Fragment(), OnMapReadyCallback,
     GoogleApiClient.ConnectionCallbacks,
     GoogleApiClient.OnConnectionFailedListener,
-    LocationListener,
-    ConnectivityReceiver.ConnectivityReceiverListener {
+    LocationListener {
 
     companion object {
         const val TAG: String = "HomeFragmentDebug"
@@ -71,9 +71,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var sharedPreferences: SharedPreferences
-    private var isConnected: Boolean? = false
-
-    private var snackbar: Snackbar? = null
+    private var distance: Float = 0F
 
     // Google Map
     private lateinit var mMap: GoogleMap
@@ -83,11 +81,11 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
     private var mGoogleApiClient: GoogleApiClient? = null
     private lateinit var latLng: LatLng
     private lateinit var startLatLng: LatLng
-    private lateinit var mCurrLocation: Marker
-    private lateinit var mOldLocation: Marker
+    private lateinit var mCurrLocationMarker: Marker
+    private lateinit var mOldLocationMarker: Marker
     private lateinit var currentPolyline: Polyline
 
-    private var geoCoder: Geocoder? = null
+    private var geoCoder: Geocoder? = null  // For getting address from location
 
     private var currentLocation: Location? = null
     private var oldLocation: Location? = null
@@ -103,7 +101,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
-        activity!!.registerReceiver(ConnectivityReceiver(), IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+        // For checking internet connection
+        //------
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         isOnRide = sharedPreferences.getBoolean(Constant.IS_ON_RIDE, false)
@@ -114,10 +113,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
         return binding.root
     }
 
-    override fun onNetworkConnectionChanged(isConnected: Boolean) {
-        showNetworkMessage(isConnected)
-    }
-
     override fun onResume() {
         super.onResume()
         mToast.showToast(context!!, "onResume: called", Toast.LENGTH_SHORT)
@@ -126,10 +121,24 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
         isOnRide = sharedPreferences.getBoolean(Constant.IS_ON_RIDE, false)
         if (isOnRide!!) {
             val num = sharedPreferences.getString(Constant.BIKE_CODE, "-")
+
             activity!!.textBikeNumber.text = num
+            binding.txtCurrentBikeOnCard.text = "Bike: $num"
+            Tools.visibleViews(binding.lytOnRideDetails)
+
+            binding.txtTimer.base = SystemClock.elapsedRealtime()
+            binding.txtTimer.start()
+            binding.txtTimer.setOnChronometerTickListener {
+                activity!!.textTravelTime.text = it.text
+            }
+
             mToast.showToast(context!!, num!!, Toast.LENGTH_SHORT)
             binding.textScanCode.text = "End Ride"
             initComponent()
+
+            // Start ride timer
+
+
         } else {
             initComponent()
         }
@@ -152,7 +161,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
     }
 
     private fun initComponent() {
-        binding.btnLocateMe.setOnClickListener {
+        binding.fabLocateMe.setOnClickListener {
             //            getDeviceLocation()
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, DEFAULT_ZOOM))
         }
@@ -162,13 +171,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
                 binding.textScanCode.text = "Unlock Bike"
                 startActivity(Intent(activity, ScanQrActivity::class.java))
             } else {
-                sharedPreferences.edit().putString(Constant.BIKE_CODE, "-").apply()
-                sharedPreferences.edit().putBoolean(Constant.IS_ON_RIDE, false).apply()
-                activity!!.textBikeNumber.text = sharedPreferences.getString(Constant.BIKE_CODE, "-")
-                binding.textScanCode.text = "Unlock Bike"
-                mMap.clear()
-                onResume()
-                checkLocationAndDataService()
+                // Start Payment activity here
+                showAlertDialog()
             }
         }
 
@@ -294,21 +298,17 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
     }*/
 
     private fun getAddress(location: Location?) {
-        if (isConnected!!) {
+        location!!.let {
+            var addresses: List<Address> = emptyList()
 
-            location!!.let {
-                var addresses: List<Address> = emptyList()
+            addresses = geoCoder!!.getFromLocation(location.latitude, location.longitude, 1)
 
-                addresses = geoCoder!!.getFromLocation(it.latitude, it.longitude, 1)
+            val address = addresses[0].getAddressLine(0)
+            val city = addresses[0].locality
+            val state = addresses[0].adminArea
+            val countryCode = addresses[0].countryCode
 
-                val address = addresses[0].getAddressLine(0)
-                val city = addresses[0].locality
-                val state = addresses[0].adminArea
-                val countryCode = addresses[0].countryCode
-
-                binding.txtLocationAddress.text = "$address"
-            }
-
+            binding.txtLocationAddress.text = address
         }
     }
 
@@ -388,6 +388,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
         // Customize the style of Google Map
         setCustomTheme(mMap)
 
+
         // call getDeviceLocation
         try {
             if (isLocationPermissionGranted) {
@@ -433,6 +434,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
                 if (mLastLocation != null) {
                     mMap.clear()
                     latLng = LatLng(mLastLocation.latitude, mLastLocation.longitude)
+                    startLatLng = latLng
                     getAddress(mLastLocation)
 //                    mCurrLocation = mMap.addMarker(MarkerOptions().position(latLng).title("You'r here").icon(BitmapDescriptorFactory.fromResource(R.drawable.pin_x64)))
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, DEFAULT_ZOOM))
@@ -471,23 +473,36 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
         Log.d(TAG, "onConnectionFailed: called")
     }
 
-    override fun onLocationChanged(p0: Location?) {
+    @SuppressLint("SetTextI18n")
+    override fun onLocationChanged(location: Location?) {
         /*if (mCurrLocation != null) {
             mCurrLocation.remove()
         }*/
-        if (p0 != null) {
+        if (location != null) {
+            currentLocation = location
             //mToast.showToast(context!!, "Location changed", Toast.LENGTH_SHORT)
-            latLng = LatLng(p0.latitude, p0.longitude)
+            latLng = LatLng(location.latitude, location.longitude)
             //mCurrLocation = mMap.addMarker(MarkerOptions().position(latLng).title("You'r here").icon(BitmapDescriptorFactory.fromResource(R.drawable.pin_x64)))
-            getAddress(p0)
+            getAddress(location)
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, DEFAULT_ZOOM))
 
             if (!isOnRide!!) {
-                oldLocation = p0
+                oldLocation = location
                 startLatLng = latLng
             } else {
                 // TODO: Start ride & drawing line on MAP
+                mMap.clear()
                 drawPolylineMap()
+                distance = oldLocation!!.distanceTo(currentLocation)   // Calculate distance btn 2 location's
+                sharedPreferences.edit().putString(Constant.TRAVEL_DISTANCE, distance.toString()).apply()
+                if (distance < 1000) {
+                    activity!!.textDistance.text = "${distance.toInt()} m"
+                    binding.txtDistance.text = "${distance.toInt()} m"
+                }
+                else {
+                    activity!!.textDistance.text = "${distance.toInt() / 1000} Km"
+                    binding.txtDistance.text = "${distance.toInt() / 1000} Km"
+                }
             }
         }
     }
@@ -598,33 +613,55 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
 
     private fun setCustomTheme(map: GoogleMap) {
 
-        val hour = getClockTime()
+        /*val hour = getClockTime()
 
         when (hour) {
             in 0..6 -> map.setMapStyle(MapStyleOptions.loadRawResourceStyle(activity, R.raw.night))
             in 7..18 -> map.setMapStyle(MapStyleOptions.loadRawResourceStyle(activity, R.raw.uber_style))
             in 19..24 -> map.setMapStyle(MapStyleOptions.loadRawResourceStyle(activity, R.raw.night))
-        }
+        }*/
 
-//        mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(activity, R.raw.uber_style))
-    }
-
-    private fun showNetworkMessage(isConnected: Boolean) {
-        if (!isConnected) {
-            this.isConnected = false
-            snackbar = Snackbar.make(binding.root, "You are offline", Snackbar.LENGTH_LONG)
-            snackbar?.duration = BaseTransientBottomBar.LENGTH_INDEFINITE
-            Tools.setSnackBarBgColor(context!!, snackbar!!, R.color.red_500)
-            snackbar?.show()
-        } else {
-            this.isConnected = true
-            snackbar?.dismiss()
-        }
+        mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(activity, R.raw.uber_style))
     }
 
     private fun getClockTime(): Int {
         val c = Calendar.getInstance()
         return c.get(Calendar.HOUR_OF_DAY)
+    }
+
+    private fun showAlertDialog() {
+        val alertDialog = AlertDialog.Builder(activity!!)
+        alertDialog.setTitle("End Ride")
+        alertDialog.setMessage("Are you sure you want to end ride?")
+        alertDialog.setPositiveButton("Yes") { dialog, which ->
+
+            // End ride and go to payment screen.
+            mMap.clear()
+            binding.txtTimer.stop()
+
+            //sharedPreferences.edit().putString(Constant.BIKE_CODE, "-").apply()
+            sharedPreferences.edit().putBoolean(Constant.IS_ON_RIDE, false).apply()
+            sharedPreferences.edit().putString(Constant.TRAVEL_DISTANCE, distance.toString()).apply()
+            sharedPreferences.edit().putString(Constant.TRAVEL_TIME, binding.txtTimer.text.toString()).apply()
+
+            activity!!.textBikeNumber.text = sharedPreferences.getString(Constant.BIKE_CODE, "-")
+            binding.txtCurrentBikeOnCard.text = "Bike: ${sharedPreferences.getString(Constant.BIKE_CODE, "-")}"
+            Tools.inVisibleViews(binding.lytOnRideDetails, type = 1)
+            binding.txtTimer.base = SystemClock.elapsedRealtime()
+
+            binding.textScanCode.text = "Unlock Bike"
+            onResume()
+            checkLocationAndDataService()
+
+            // TODO: Start payment activity here.
+            dialog.dismiss()
+            startActivity(Intent(activity!!, PaymentActivity::class.java))
+
+        }
+        alertDialog.setNegativeButton("No") { dialog, which ->
+            mToast.showToast(activity!!, "No", Toast.LENGTH_SHORT)
+        }
+        alertDialog.show()
     }
 
 }

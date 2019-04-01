@@ -13,6 +13,8 @@ class Constant {
 
         const val IS_ON_RIDE: String = "IS ON RIDE"
         const val BIKE_CODE: String = "BIKE CODE"
+        const val TRAVEL_DISTANCE: String = "TRAVEL DISTANCE"
+        const val TRAVEL_TIME: String = "TRAVEL TIME"
 
     }
 }

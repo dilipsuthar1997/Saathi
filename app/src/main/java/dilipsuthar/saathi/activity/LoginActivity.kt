@@ -52,6 +52,8 @@ class LoginActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRece
     private lateinit var dialogWarning: Dialog
     private lateinit var progressDialog: ProgressDialog
     private var snackBar: Snackbar? = null
+    private var isOtpSent = false
+    var isDataConnected = false
 
     private lateinit var sharedPreferences: SharedPreferences
 
@@ -86,6 +88,7 @@ class LoginActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRece
     }
 
     override fun onNetworkConnectionChanged(isConnected: Boolean) {
+        isDataConnected = isConnected
         showNetworkMessage(isConnected)
     }
 
@@ -153,16 +156,18 @@ class LoginActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRece
 
             override fun onCodeSent(verificationId: String?, token: PhoneAuthProvider.ForceResendingToken?) {
                 Log.d(TAG, "onCodeSent: $verificationId")
+                isOtpSent = true
 
                 storedVerificationId = verificationId!!
                 resendToken = token!!
 
                 Tools.inVisibleViews(binding.progressBar, type = 0)
-                showOTPDialog()
                 Tools.enableViews(binding.editTextMobNumber, binding.buttonLogin, binding.checkBox)
+                showOTPDialog()
             }
 
             override fun onCodeAutoRetrievalTimeOut(p0: String?) {
+                mToast.showToast(applicationContext, p0!!, Toast.LENGTH_SHORT)
                 Tools.inVisibleViews(binding.progressBar, type = 0)
                 Tools.enableViews(binding.buttonLogin, binding.editTextMobNumber, binding.checkBox)
             }
@@ -178,9 +183,22 @@ class LoginActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRece
             Tools.visibleViews(binding.progressBar)
             Tools.disableViews(binding.buttonLogin, binding.editTextMobNumber, binding.checkBox)
 
-            //mToast.showToast(this, phoneNumber, Toast.LENGTH_SHORT)
-
             requestVerificationCode(phoneNumber)
+
+            // Start timer when request for OTP
+            object : CountDownTimer(20*1000, 1000) {
+                override fun onFinish() {
+                    if (!isOtpSent){
+                        mToast.showToast(applicationContext, "OTP not send.", Toast.LENGTH_SHORT)
+                        Tools.inVisibleViews(binding.progressBar, type = 0)
+                        Tools.enableViews(binding.editTextMobNumber, binding.buttonLogin, binding.checkBox)
+                    }
+                }
+
+                override fun onTick(millisUntilFinished: Long) {
+
+                }
+            }.start()
         }
     }
 
@@ -269,7 +287,7 @@ class LoginActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRece
     private fun requestVerificationCode(number: String) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
             getPhoneNumber(number),
-            30,
+            20,
             TimeUnit.SECONDS,
             this,
             callbacks
@@ -281,7 +299,7 @@ class LoginActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRece
 
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
             getPhoneNumber(number),
-            30,
+            20,
             TimeUnit.SECONDS,
             this,
             callbacks,
