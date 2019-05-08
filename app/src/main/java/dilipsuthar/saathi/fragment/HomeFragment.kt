@@ -400,6 +400,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
                 mMap.uiSettings.isZoomControlsEnabled = false
                 mMap.uiSettings.isMyLocationButtonEnabled = false
 
+                // For getting address of location
                 geoCoder = Geocoder(activity!!, Locale.getDefault())    // For address
                 buildGoogleApiClient()
             } else {
@@ -522,6 +523,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
     private fun getDirectionUrl(origin: LatLng, dest: LatLng, drivingMode: String): String {
         return "https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}&destination=${dest.latitude},${dest.longitude}&sensor=false&mode=$drivingMode&key=${getString(R.string.google_maps_key)}"
     }
+
     //------------------------ doInBackground process ------------------------------------------------------------------
     @SuppressLint("StaticFieldLeak")
     private inner class GetDirection(val url: String) : AsyncTask<Void, Void, List<List<LatLng>>>() {

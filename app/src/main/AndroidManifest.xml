@@ -12,7 +12,6 @@
     <uses-permission android:name="android.permission.CAMERA"/>
 
     <uses-feature android:name="android.hardware.Camera"/>
-
     <uses-permission android:name="android.permission.FLASHLIGHT"/>
 
     <uses-feature
@@ -26,10 +25,13 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.PaymentActivity">
-        </activity>
-        <activity android:name=".activity.ScanQrActivity">
-        </activity>
+        <activity android:name=".activity.PaymentDoneActivity"
+                android:screenOrientation="portrait"/>
+        <activity android:name=".activity.PaymentActivity"
+                android:screenOrientation="portrait"/>
+        <activity android:name=".activity.ScanQrActivity"
+                android:screenOrientation="portrait"/>
+
         <activity
                 android:name=".activity.SplashActivity"
                 android:screenOrientation="portrait">

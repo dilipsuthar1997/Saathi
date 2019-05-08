@@ -141,10 +141,12 @@ class LoginActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRece
         }
 
         binding.buttonGoogleSignin.setOnClickListener {
-            startGoogleAuth()
+            if (isTermAccepted())
+                startGoogleAuth()
         }
 
         callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+
             override fun onVerificationCompleted(credential: PhoneAuthCredential?) {
                 // For Auto SignIn
                 //signInWithPhoneAuthCredential(credential!!)
