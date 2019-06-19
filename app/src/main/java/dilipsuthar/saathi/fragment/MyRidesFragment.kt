@@ -21,6 +21,7 @@ import dilipsuthar.saathi.adapter.AdapterRideHistory
 import dilipsuthar.saathi.databinding.FragmentMyRidesBinding
 import dilipsuthar.saathi.model.ItemRideHistory
 import dilipsuthar.saathi.utils.mToast
+import es.dmoral.toasty.Toasty
 
 /**
  * A simple [Fragment] subclass.
@@ -93,6 +94,9 @@ class MyRidesFragment : Fragment() {
 
                     items.add(rideHistory)
                 }
+
+                if (items.size == 0)
+                    Toasty.info(context!!, "You don't have ride history", Toasty.LENGTH_SHORT, true).show()
 
                 adapter = AdapterRideHistory(items)
                 binding.recyclerView.adapter = adapter

@@ -1,5 +1,6 @@
 package dilipsuthar.saathi.activity
 
+import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
 import android.content.SharedPreferences
@@ -104,7 +105,7 @@ class PaymentActivity : AppCompatActivity() {
     private fun getPayableAmount() : String {
         val dis = distance!!.toFloat()
         val amountRs: Int = ((dis.toInt()/1000) * 5)
-        var amountPaise = 0
+        val amountPaise: Int
         amountPaise = ((dis.toInt() % 1000) * 5)
 
         return "Rs. $amountRs.$amountPaise"
@@ -122,12 +123,13 @@ class PaymentActivity : AppCompatActivity() {
         progressDialog.show()
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun updateDatabase() {
 
-        var date = Calendar.getInstance().time
-        var sdf = SimpleDateFormat("dd/MM/yyyy, HH:mm")
+        val date = Calendar.getInstance().time
+        val sdf = SimpleDateFormat("dd/MM/yyyy, HH:mm")
 
-        var rideHistory = HashMap<String, Any?>()
+        val rideHistory = HashMap<String, Any?>()
         rideHistory["bike_id"] = bikeNumber
         rideHistory["ride_date_time"] = sdf.format(date)
         rideHistory["travel_distance"] = distance

@@ -241,16 +241,16 @@ class HomeActivity : AppCompatActivity() {
                         headerView.name.text = task.result!!.getString("name")
                         headerView.email.text = task.result!!.getString("email")
 
-                        Glide
-                            .with(applicationContext)
+                        val defaultRequestOptions = RequestOptions().placeholder(R.drawable.placeholder)
+
+                        Glide.with(applicationContext)
+                            .setDefaultRequestOptions(defaultRequestOptions)
                             .load(userProfileUrl)
-                            .apply(RequestOptions().placeholder(R.drawable.placeholder))
                             .into(binding.imageCurrentUser)
 
-                        Glide
-                            .with(applicationContext)
+                        Glide.with(applicationContext)
+                            .setDefaultRequestOptions(defaultRequestOptions)
                             .load(userProfileUrl)
-                            .apply(RequestOptions().placeholder(R.drawable.placeholder))
                             .into(headerView.avatar)
                     }
                 } else {
