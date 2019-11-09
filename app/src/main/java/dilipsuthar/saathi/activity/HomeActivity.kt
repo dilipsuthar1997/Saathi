@@ -109,6 +109,7 @@ class HomeActivity : AppCompatActivity() {
         super.onDestroy()
         // Set Current Bike = null
         sharedPreferences.edit().putString(Constant.BIKE_CODE, "-").apply()
+        //unregisterReceiver(ConnectivityReceiver())
     }
 
     override fun onBackPressed() {
